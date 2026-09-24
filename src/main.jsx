@@ -4,12 +4,12 @@ import { gsap } from 'gsap'
 import './styles.css'
 
 const works = [
-  { title: '爆款开头', type: '内容增长', note: '前三秒的注意力设计', video: '/videos/01-hook-strategy.mp4', index: '01' },
-  { title: '拍摄手法', type: '视觉生产', note: '让表达具备记忆点', video: '/videos/02-shooting-language.mp4', index: '02' },
-  { title: '个人 IP 运营', type: '人物案例', note: '编导与运营的协同', video: '/videos/03-personal-ip.mp4', index: '03' },
-  { title: '10S 香水电商', type: 'AI 广告', note: '快速完成商品氛围叙事', video: '/videos/04-ai-perfume-ad.mp4', index: '04' },
-  { title: '二手浪漫', type: 'AI 创意', note: '短叙事的情绪切片', video: '/videos/05-ai-standup.mp4', index: '05' },
-  { title: 'AI Motion', type: 'AI 创意', note: '动态视觉实验', video: '/videos/06-ai-motion.mp4', index: '06' },
+  { title: '爆款开头', type: '内容增长', note: '前三秒的注意力设计', video: './videos/01-hook-strategy.mp4', index: '01' },
+  { title: '拍摄手法', type: '视觉生产', note: '让表达具备记忆点', video: './videos/02-shooting-language.mp4', index: '02' },
+  { title: '个人 IP 运营', type: '人物案例', note: '编导与运营的协同', video: './videos/03-personal-ip.mp4', index: '03' },
+  { title: '10S 香水电商', type: 'AI 广告', note: '快速完成商品氛围叙事', video: './videos/04-ai-perfume-ad.mp4', index: '04' },
+  { title: '二手浪漫', type: 'AI 创意', note: '短叙事的情绪切片', video: './videos/05-ai-standup.mp4', index: '05' },
+  { title: 'AI Motion', type: 'AI 创意', note: '动态视觉实验', video: './videos/06-ai-motion.mp4', index: '06' },
 ]
 
 const advantages = [
@@ -391,7 +391,7 @@ function App() {
     <main ref={appRef}>
       <section className="hero" id="home">
         <video className="hero-video" autoPlay muted loop playsInline preload="metadata">
-          <source src="/videos/about-loop.mp4" type="video/mp4" />
+          <source src="./videos/about-loop.mp4" type="video/mp4" />
         </video>
         <div className="hero-video-mask" />
         <div className="grain" />
@@ -415,7 +415,7 @@ function App() {
             </div>
           </div>
           <div className="hero-art" data-reveal>
-            <img src="/images/portrait.png" alt="个人形象照" width="765" height="1041" fetchPriority="high" decoding="async" />
+            <img src="./images/portrait.png" alt="个人形象照" width="765" height="1041" fetchPriority="high" decoding="async" />
             <div className="orbit orbit-one" /><div className="orbit orbit-two" />
             <div className="signal-card card-one"><span>FOCUS</span><strong>CONTENT<br />GRAVITY</strong></div>
             <div className="signal-card card-two"><span>MODE</span><strong>GROWTH<br />SYSTEM</strong></div>
@@ -431,7 +431,7 @@ function App() {
         <div className="section-label" data-reveal><span>01</span> ABOUT ME</div>
         <div className="about-grid">
           <div className="about-visual" data-reveal>
-            <DeferredLoopVideo className="about-video" source="/videos/about-loop.mp4" />
+            <DeferredLoopVideo className="about-video" source="./videos/about-loop.mp4" />
           </div>
           <div className="about-copy" data-reveal>
             <p className="eyebrow">SKILL SET / CONTENT SYSTEM BUILDER</p>
@@ -472,7 +472,7 @@ function App() {
           <p className="eyebrow"><span /> LET'S MAKE A SIGNAL</p>
           <h2>准备好让你的品牌<br /><em>被看见了吗？</em></h2>
           <p>把你的品牌、目标和难题告诉我，我们从下一条内容开始。</p>
-          <a className="button button-primary button-large" href="/images/wechat-qr.jpg" target="_blank" rel="noreferrer"><span>发起合作咨询</span> <b>↗</b></a>
+          <a className="button button-primary button-large" href="./images/wechat-qr.jpg" target="_blank" rel="noreferrer"><span>发起合作咨询</span> <b>↗</b></a>
           <div className="contact-note">邮箱：18183413411@163.com / 微信：S1mpledzfzxf</div>
         </div>
         <footer className="shell"><a className="brand" href="#home"><b>DM</b><span>Digital<br />Operator</span></a><span>© 2026 · INDEPENDENT DIGITAL OPERATOR</span><a href="#home">BACK TO TOP ↑</a></footer>
