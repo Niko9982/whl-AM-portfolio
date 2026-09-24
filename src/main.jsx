@@ -33,6 +33,9 @@ const collaborators = [
   { index: '03', name: '大卫的家 🏠（装修中）', handle: '抖音号：73932744077', direction: '装修类', service: '重新策划拍摄内容与账号方向', likes: '331.9 万获赞', followers: '48.7 万粉丝' },
 ]
 
+const isPortraitMobile = () => window.matchMedia('(max-width: 767px) and (orientation: portrait)').matches
+const playMutedVideo = (video) => video?.play().catch(() => {})
+
 class ErrorBoundary extends Component {
   state = { hasError: false }
 
@@ -138,6 +141,7 @@ function DeferredLoopVideo({ className, source }) {
   useEffect(() => {
     const video = videoRef.current
     if (!video || !('IntersectionObserver' in window)) {
+      visibleRef.current = true
       setShouldLoad(true)
       return undefined
     }
@@ -146,7 +150,7 @@ function DeferredLoopVideo({ className, source }) {
       visibleRef.current = entry.isIntersecting
       if (entry.isIntersecting) {
         setShouldLoad(true)
-        if (video.readyState >= 2) video.play()
+        if (video.readyState >= 2) playMutedVideo(video)
       } else {
         video.pause()
       }
@@ -156,7 +160,21 @@ function DeferredLoopVideo({ className, source }) {
     return () => observer.disconnect()
   }, [])
 
-  return <video ref={videoRef} className={className} muted loop playsInline preload={shouldLoad ? 'metadata' : 'none'} onCanPlay={() => visibleRef.current && videoRef.current?.play()}>{shouldLoad && <source src={source} type="video/mp4" />}</video>
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !shouldLoad) return undefined
+
+    const playWhenReady = () => {
+      if (visibleRef.current) playMutedVideo(video)
+    }
+
+    video.load()
+    video.addEventListener('canplay', playWhenReady, { once: true })
+    if (video.readyState >= 2) playWhenReady()
+    return () => video.removeEventListener('canplay', playWhenReady)
+  }, [shouldLoad])
+
+  return <video ref={videoRef} className={className} muted loop playsInline preload={shouldLoad ? 'metadata' : 'none'} onCanPlay={() => visibleRef.current && playMutedVideo(videoRef.current)}>{shouldLoad && <source src={source} type="video/mp4" />}</video>
 }
 
 function VideoCard({ work }) {
@@ -183,6 +201,20 @@ function VideoCard({ work }) {
     observer.observe(card)
     return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !shouldLoad) return undefined
+
+    const playWhenReady = () => {
+      if (isPortraitMobile()) playMutedVideo(video)
+    }
+
+    video.load()
+    video.addEventListener('canplay', playWhenReady, { once: true })
+    if (video.readyState >= 2) playWhenReady()
+    return () => video.removeEventListener('canplay', playWhenReady)
+  }, [shouldLoad])
 
   useEffect(() => {
     if (!videoRef.current) return undefined
@@ -214,12 +246,12 @@ function VideoCard({ work }) {
   const handleMouseEnter = () => {
     isHoveringRef.current = true
     setShouldLoad(true)
-    if (videoRef.current?.readyState >= 2) videoRef.current.play()
+    if (videoRef.current?.readyState >= 2) playMutedVideo(videoRef.current)
   }
 
   return (
     <article className="work-card" ref={cardRef} onMouseEnter={handleMouseEnter} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-      <video ref={videoRef} className="work-video" muted loop playsInline preload={shouldLoad ? 'metadata' : 'none'} onCanPlay={() => isHoveringRef.current && videoRef.current?.play()}>
+      <video ref={videoRef} className="work-video" muted loop playsInline preload={shouldLoad ? 'metadata' : 'none'} onCanPlay={() => (isHoveringRef.current || isPortraitMobile()) && playMutedVideo(videoRef.current)}>
         {shouldLoad && <source src={work.video} type="video/mp4" />}
       </video>
       <div className="work-shade" />
