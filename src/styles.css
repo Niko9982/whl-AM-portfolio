@@ -73,6 +73,7 @@ html { scroll-behavior: smooth; }
   body { min-width: 0; overflow-x: hidden; }
   .shell { width: calc(100vw - 40px); }
   .hero { height: max(760px, 100svh); min-height: 760px; }
+  .hero-video { opacity: .22; }
   .hero-video-mask { background: radial-gradient(circle at 50% 66%, rgba(88,28,164,.28), transparent 32%), linear-gradient(180deg, #06040a 0%, rgba(6,4,10,.62) 53%, #06040a 100%); }
   .nav { height: 68px; width: calc(100vw - 40px); }
   .nav.is-scrolled { height: 68px; }
